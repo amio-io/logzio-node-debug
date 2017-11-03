@@ -1,0 +1,21 @@
+{
+  "name": "logzio-node-debug",
+  "version": "1.0.0",
+  "description": "A nodejs debug wrapper for logz.io",
+  "main": "./src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amio-io/logzio-node-debug.git"
+  },
+  "keywords": [
+    "logzio",
+    "node",
+    "debug"
+  ],
+  "author": "zatziky@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amio-io/logzio-node-debug/issues"
+  },
+  "homepage": "https://github.com/amio-io/logzio-node-debug#readme"
+}
