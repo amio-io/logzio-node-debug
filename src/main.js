@@ -4,7 +4,11 @@ const logzIo = require('logzio-nodejs')
 class LogzDebug {
 
     constructor() {
-        this.logzLogger = null
+        this.logzLogger = {
+            log() {
+                // do nothing if logzio not initialized. Useful for tests.
+            }
+        }
     }
 
     init(logzOptions) {
@@ -12,7 +16,6 @@ class LogzDebug {
     }
 
     debug(namespace) {
-        if (!this.logzLogger) throw new Error('LogzDebug must be initialized first! require("logzio-debug").init(...)')
         const logLevel = namespace.endsWith(':error') ? 'error' : 'debug'
         const debugLogger = debug(namespace)
 
