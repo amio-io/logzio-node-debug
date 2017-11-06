@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/amio-io/logzio-node-debug#readme",
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "~2.6.3",
     "logzio-nodejs": "^0.4.4"
   }
 }
