@@ -1,6 +1,6 @@
 {
   "name": "logzio-node-debug",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A nodejs debug wrapper for logz.io",
   "main": "./src/main.js",
   "repository": {
