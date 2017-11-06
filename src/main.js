@@ -3,26 +3,27 @@ const logzIo = require('logzio-nodejs')
 
 class LogzDebug {
 
-    constructor () {
-        this.logzDebug = null
-        this.logzError = null
+    constructor() {
+        this.logzLogger = null
     }
 
-    init(logzOptionsDebug, logzOptionsError){
-        this.logzDebug = logzIo.createLogger(logzOptionsDebug)
-
-        this.logzError = logzIo.createLogger(logzOptionsError)
+    init(logzOptions) {
+        this.logzLogger = logzIo.createLogger(logzOptions)
     }
 
-    debug(namespace){
-        if(!this.logzDebug) throw new Error('logz-node-debug must be initialized first! require("logzio-debug").init(...)')
+    debug(namespace) {
+        if (!this.logzLogger) throw new Error('LogzDebug must be initialized first! require("logzio-debug").init(...)')
+        const logLevel = namespace.endsWith(':error') ? 'error' : 'debug'
+        const debugLogger = debug(namespace)
 
         return (...args) => {
             // const loggedMethodName = logger.caller ? logger.caller.name : 'UNKNOWN'
-            debug(namespace)(...args)
+            debugLogger(...args)
 
-            const logz = namespace.endsWith(':error') ? this.logzError : this.logzDebug
-            logz.log([namespace, ...args].join(' '))
+            this.logzLogger.log({
+                level: logLevel,
+                message: [namespace, ...args].join(' ')
+            })
         }
     }
 }
