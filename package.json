@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/amio-io/logzio-node-debug/issues"
   },
-  "homepage": "https://github.com/amio-io/logzio-node-debug#readme"
+  "homepage": "https://github.com/amio-io/logzio-node-debug#readme",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "logzio-nodejs": "^0.4.4"
+  }
 }
