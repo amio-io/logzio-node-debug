@@ -1,5 +1,6 @@
 const debug = require('debug')
 const logzIo = require('logzio-nodejs')
+const stringifyObject = require('stringify-object')
 
 class LogzDebug {
 
@@ -23,9 +24,11 @@ class LogzDebug {
             // const loggedMethodName = logger.caller ? logger.caller.name : 'UNKNOWN'
             debugLogger(...args)
 
+          const stringifiedArgs = data.map(data => stringifyObject(data).replace(/\s+/g, ' '))
+
             this.logzLogger.log({
                 level: logLevel,
-                message: [namespace, ...args].join(' ')
+                message: [namespace, ...stringifiedArgs]
             })
         }
     }
