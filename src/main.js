@@ -21,10 +21,12 @@ class LogzDebug {
         const debugLogger = debug(namespace)
 
         return (...args) => {
-            // const loggedMethodName = logger.caller ? logger.caller.name : 'UNKNOWN'
-            debugLogger(...args)
+          // const loggedMethodName = logger.caller ? logger.caller.name : 'UNKNOWN'
+          debugLogger(...args)
 
-          const stringifiedArgs = data.map(data => stringifyObject(data).replace(/\s+/g, ' '))
+          const stringifiedArgs = args
+            .map(item => stringifyObject(item)
+            .replace(/\s+/g, ' '))
 
             this.logzLogger.log({
                 level: logLevel,
