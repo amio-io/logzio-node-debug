@@ -47,7 +47,7 @@ class LogzDebug {
       this.logzLogger.log({
         level: logLevel,
         requestId,
-        message: [, namespace, ...stringifiedArgs]
+        message: [namespace, ...stringifiedArgs]
       })
     }
   }

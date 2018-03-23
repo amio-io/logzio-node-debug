@@ -36,6 +36,16 @@ debug('I am debug')
 error('I am error')
 ```
 
+#### Request ids in logs
+When you have some concurrent request (which you for sure have in prod ;-) then you will want to filter logs by `requestId`.
+To enable this functionality include `requestIdMiddleware` to your app middlewares, probably somewhere in **app.js**:
+```
+const requestIdMiddleware = require('logzio-node-debug').requestIdMiddleware
+app.use(requestIdMiddleware)
+```
+
+In Logz.io/Kibana use field `requestId` to filter your logs. 
+
 ### Tests
 
 While testing you will probably need no Logz.io at all. In that case, just don't initialize the lib with 
