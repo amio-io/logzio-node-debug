@@ -1,4 +1,6 @@
 # logzio-node-debug
+[![npm version](https://badge.fury.io/js/logzio-node-debug.svg)](https://badge.fury.io/js/logzio-node-debug)
+
 A nodejs [debug wrapper](https://github.com/visionmedia/debug) for logz.io
 
 This library is ES6 thus suitable for Node development and **not** for browser.
