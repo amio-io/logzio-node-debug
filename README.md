@@ -49,7 +49,7 @@ Creates MDC context. Has to be called before calling `put`, otherwise `put` will
 
 It is possible to create nested contexts. In that case, all MDC data from parent context will be copied to child context, therefore all modifications to MDC in the child context will be done independently from the parent context.
 
-The `next` parameter is context callback. MDC data will be valid during the whole duration of the callback. This makes it ideal to call this in a middleware function.
+The `next` parameter is context callback. MDC data will be valid during the whole duration of the callback. This makes it ideal to call this in a middleware function (see [request-id.middleware.js](src/request-id.middleware.js) for example).
 ```
 const MDC = require('logzio-node-debug').MDC
 
