@@ -1,11 +1,9 @@
-const continuationStorage = require('continuation-local-storage');
-const createNamespace = continuationStorage.createNamespace
-const requestNamespace = createNamespace('request');
-const shortid = require('shortid');
+const shortid = require('shortid')
+const MDC = require('./request-scope-storage')
 
 function requestIdMiddleware(req, res, next) {
-  requestNamespace.run(() => {
-    requestNamespace.set('id', shortid.generate())
+  MDC.createContext(() => {
+    MDC.put('requestId', shortid.generate())
     next()
   })
 }
