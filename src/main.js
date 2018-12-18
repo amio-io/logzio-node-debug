@@ -1,7 +1,7 @@
 const debug = require('debug')
 const logzIo = require('logzio-nodejs')
 const stringifyObject = require('stringify-object')
-const requestScopeStorage = require('./request-scope-storage')
+const requestScopeStorage = require('./mapped-diagnostic-context')
 const requestIdMiddleware = require('./request-id.middleware')
 
 class LogzDebug {

@@ -67,6 +67,19 @@ MDC.createContext(() => {
 })
 ```
 
+Or, as an Express middleware function:
+
+```
+const MDC = require('logzio-node-debug').MDC
+
+function mdcMiddleware(req, res, next) {
+  MDC.createContext(() => {
+    MDC.put('foo', 'bar')
+    next()
+  })
+}
+```
+
 ##### MDC.getAll()
 Returns the whole MDC object.
 
@@ -86,16 +99,18 @@ Removes all data from MDC.
 ```
 MDC.createContext(() => {
   MDC.put('foo', '1')
-  doStuff(() => {
-    MDC.put('bar', 2)
-    MDC.get('foo') // => '1'
-    MDC.getAll() // => {foo: '1', bar: 2}
-    MDC.remove('foo')
-    MDC.getAll() // => {bar: 2}
-    MDC.clear()
-    MDC.getAll() // => {}
-  })
+  doStuff()
 })
+
+function doStuff() {
+  MDC.put('bar', 2)
+  MDC.get('foo') // => '1'
+  MDC.getAll() // => {foo: '1', bar: 2}
+  MDC.remove('foo')
+  MDC.getAll() // => {bar: 2}
+  MDC.clear()
+  MDC.getAll() // => {}
+}
 ```
 
 #### Request ids in logs

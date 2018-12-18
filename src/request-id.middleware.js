@@ -1,5 +1,5 @@
 const shortid = require('shortid')
-const MDC = require('./request-scope-storage')
+const MDC = require('./mapped-diagnostic-context')
 
 function requestIdMiddleware(req, res, next) {
   MDC.createContext(() => {

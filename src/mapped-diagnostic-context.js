@@ -26,10 +26,8 @@ function createContext(next) {
 
 function getAll() {
   const mdc = getNamespace(NSP_REQUEST).get(KEY_MDC)
-  if(!mdc) {
-    return {}
-  }
-  return mdc
+
+  return mdc || {}
 }
 
 function get(key) {
