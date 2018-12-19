@@ -38,9 +38,84 @@ debug('I am debug')
 error('I am error')
 ```
 
+### MDC - Mapped Diagnostic Context
+Inspired by [Logback's implementation](https://logback.qos.ch/manual/mdc.html) of [SLF4J MDC API](https://www.slf4j.org/manual.html#mdc)
+
+MDC allows you to store extra data which will be automagically appended to every log entry as long as you stay in the current context. In Logz.io, the MDC keys will be shown as Fields and can be used as filter parameters.
+
+#### MDC API
+##### MDC.createContext(next)
+Creates MDC context. Has to be called before calling `put`, otherwise `put` will have no effect.
+
+It is possible to create nested contexts. In that case, all MDC data from parent context will be copied to child context, therefore all modifications to MDC in the child context will be done independently from the parent context.
+
+The `next` parameter is context callback. MDC data will be valid during the whole duration of the callback. This makes it ideal to call this in a middleware function (see [request-id.middleware.js](src/request-id.middleware.js) for example).
+```
+const MDC = require('logzio-node-debug').MDC
+
+MDC.createContext(doStuff)
+```
+
+Or, if you want to create a context with one or more values already initialized:
+
+```
+const MDC = require('logzio-node-debug').MDC
+
+MDC.createContext(() => {
+  MDC.put('foo', 'bar')
+  doStuff()
+})
+```
+
+Or, as an Express middleware function:
+
+```
+const MDC = require('logzio-node-debug').MDC
+
+function mdcMiddleware(req, res, next) {
+  MDC.createContext(() => {
+    MDC.put('foo', 'bar')
+    next()
+  })
+}
+```
+
+##### MDC.getAll()
+Returns the whole MDC object.
+
+##### MDC.get(key)
+Returns the value of the `key` in MDC.
+
+##### MDC.put(key, value)
+Sets the `value` of `key` in MDC.
+
+##### MDC.remove(key)
+Sets the `key` to `undefined`.
+
+##### MDC.clear()
+Removes all data from MDC.
+
+##### One example to explain them all
+```
+MDC.createContext(() => {
+  MDC.put('foo', '1')
+  doStuff()
+})
+
+function doStuff() {
+  MDC.put('bar', 2)
+  MDC.get('foo') // => '1'
+  MDC.getAll() // => {foo: '1', bar: 2}
+  MDC.remove('foo')
+  MDC.getAll() // => {bar: 2}
+  MDC.clear()
+  MDC.getAll() // => {}
+}
+```
+
 #### Request ids in logs
-When you have some concurrent request (which you for sure have in prod ;-) then you will want to filter logs by `requestId`.
-To enable this functionality include `requestIdMiddleware` to your app middlewares, probably somewhere in **app.js**:
+A common use-case for MDC is adding a `requestId` to all incoming requests. If you have some concurrent request (which you for sure have in prod ;-) then you can filter logs by `requestId`.
+To enable this functionality, you can use pre-implemented `express` middleware `requestIdMiddleware`. Just add it to your app middlewares, probably somewhere in **app.js**:
 ```
 const requestIdMiddleware = require('logzio-node-debug').requestIdMiddleware
 app.use(requestIdMiddleware)
@@ -57,6 +132,6 @@ While testing you will probably need no Logz.io at all. In that case, just don't
 
 2 log levels will be appended to your message - {level: debug} or {level: error}.
 
-### Finished
+### That's all folks
 
 Enjoy the colorful console logs and logz.io side by side. 
