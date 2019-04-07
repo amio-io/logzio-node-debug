@@ -1,4 +1,5 @@
-const continuationStorage = require('continuation-local-storage')
+const continuationStorage = require('cls-hooked')
+
 const createNamespace = continuationStorage.createNamespace
 const getNamespace = continuationStorage.getNamespace
 
