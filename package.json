@@ -20,7 +20,6 @@
   "homepage": "https://github.com/amio-io/logzio-node-debug#readme",
   "dependencies": {
     "cls-hooked": "4.2.2",
-    "continuation-local-storage": "3.2.1",
     "debug": "2.6.9",
     "logzio-nodejs": "0.4.18",
     "shortid": "2.2.14",

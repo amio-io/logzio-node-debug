@@ -43,6 +43,11 @@ Inspired by [Logback's implementation](https://logback.qos.ch/manual/mdc.html) o
 
 MDC allows you to store extra data which will be automagically appended to every log entry as long as you stay in the current context. In Logz.io, the MDC keys will be shown as Fields and can be used as filter parameters.
 
+### Compatiblity issue
+We have moved to `cls-hooked` instead of `continuation-local-storage` so that the lib is compatible with async/await. 
+This causes the MDC to work with NodeJS versions 8+. If any of you need MDC to work with lower versions, create a PR
+with a switch to `cls-hooked` and `continuation-local-storage`. Thank you. ;)
+
 #### MDC API
 ##### MDC.createContext(next)
 Creates MDC context. Has to be called before calling `put`, otherwise `put` will have no effect.
