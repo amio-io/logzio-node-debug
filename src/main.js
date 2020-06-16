@@ -3,6 +3,7 @@ const logzIo = require('logzio-nodejs')
 const stringifyObject = require('stringify-object')
 const requestScopeStorage = require('./mapped-diagnostic-context')
 const requestIdMiddleware = require('./request-id.middleware')
+const Sentry = require('@sentry/node')
 
 class LogzDebug {
 
@@ -15,8 +16,16 @@ class LogzDebug {
     }
   }
 
-  init(logzOptions) {
-    this.logzLogger = logzIo.createLogger(logzOptions)
+  init(logzOptions, sentryOptions) {
+    if(logzOptions) {
+      this.logzLogger = logzIo.createLogger(logzOptions)
+      this.logzEnabled = true
+    }
+
+    if(sentryOptions) {
+      Sentry.init(sentryOptions)
+      this.sentryEnabled = true
+    }
   }
 
   requestIdMiddleware(req, res, next) {
@@ -41,13 +50,22 @@ class LogzDebug {
           .replace(/\s+/g, ' ')
       })
 
-      const logData = Object.assign({
-          level: logLevel,
-          message: [namespace, ...stringifiedArgs]
-        },
-        mdc)
+      if(this.logzEnabled) {
+        const logData = Object.assign({
+            level: logLevel,
+            message: [namespace, ...stringifiedArgs]
+          },
+          mdc)
 
-      this.logzLogger.log(logData)
+        this.logzLogger.log(logData)
+      }
+
+      if(this.sentryEnabled && logLevel === 'error') { 
+        Sentry.captureEvent({
+          message: stringifiedArgs,
+          logger: this.namespace
+        })
+      }
     }
   }
 }

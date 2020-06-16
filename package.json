@@ -1,6 +1,6 @@
 {
   "name": "logzio-node-debug",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A nodejs debug wrapper for logz.io",
   "main": "./src/main.js",
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/amio-io/logzio-node-debug#readme",
   "dependencies": {
+    "@sentry/node": "5.17.0",
     "cls-hooked": "4.2.2",
     "debug": "2.6.9",
     "logzio-nodejs": "0.4.18",
