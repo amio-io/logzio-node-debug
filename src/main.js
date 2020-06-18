@@ -3,7 +3,7 @@ const logzIo = require('logzio-nodejs')
 const stringifyObject = require('stringify-object')
 const requestScopeStorage = require('./mapped-diagnostic-context')
 const requestIdMiddleware = require('./request-id.middleware')
-const Sentry = require('@sentry/node')
+const sentryClient = require('./sentry-client')
 
 class LogzDebug {
 
@@ -23,7 +23,7 @@ class LogzDebug {
     }
 
     if(sentryOptions) {
-      Sentry.init(sentryOptions)
+      sentryClient.init(sentryOptions)
       this.sentryEnabled = true
     }
   }
@@ -61,11 +61,11 @@ class LogzDebug {
       }
 
       if(this.sentryEnabled && logLevel === 'error') { 
-        Sentry.captureEvent({
+        sentryClient.captureEvent({
           message: stringifiedArgs,
           logger: this.namespace
         })
-      }
+      } 
     }
   }
 }
